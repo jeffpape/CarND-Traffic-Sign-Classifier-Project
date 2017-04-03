@@ -19,10 +19,10 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[TrainOccurrencesImage]: ./examples/TrafficSignsOccurrencesInTrainDataSet.png "Visualization"
-[SampleTrafficSign]: ./examples/SampleTrafficSign.png "before Grayscaling"
-[SampleTrafficSignGray]: ./examples/SampleTrafficSignGray.png "after Grayscaling"
-[ReflectionOccurrencesImage]: ./examples/TrafficSignsOccurrencesWithReflections.png "Visualization"
+[TrainOccurrencesImage]: ./examples/TrafficSignsOccurrencesInTrainDataSet.png "sign classes occurrences from train data set"
+[SampleTrafficSign]: ./examples/SampleTrafficSign.png "signs before grayscale and intensity correction"
+[SampleTrafficSignGray]: ./examples/SampleTrafficSignGray.png "signs after grayscale and intensity correction"
+[ReflectionOccurrencesImage]: ./examples/TrafficSignsOccurrenceWithReflections.png "sign classes occurrences with reflections"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
@@ -61,7 +61,7 @@ The code for this step is contained in code cells from 3 to 5 (In[3] to In[5]) o
 The bar chart shows number of occurrences for each sign type in the training data set.
 
 The number of sign class occurrences versus sign classes is shown below.
-![alt text][TrainOccurrencesImage]
+![sign class occurrences from train data set][TrainOccurrencesImage]
 
 ###Design and Test a Model Architecture
 
@@ -75,8 +75,8 @@ I used the Contrast Limited Adaptive Histogram Equalization (CLAHE) in the skima
 
 Here is an example of a traffic sign image before and after grayscaling and intensity correction.
 
-![alt text][SampleTrafficSign]
-![alt text][SampleTrafficSignGray]
+![sign class before gray scale and intensity correct][SampleTrafficSign]
+![sign class after gray scale and intensity correct][SampleTrafficSignGray]
 
 I noticed several sign classes were under represented. I wrote a method, reflect (In[13]), to horizontally, vertically and both reflected some of the sign classes to generate additional images of the same sign class.
 The sign classes that are the same when reflected are:
@@ -85,14 +85,17 @@ The sign classes that are the same when reflected are:
 . both: 32, 40
 
 Some sign classes become new sign classes when horizontally reflected are:
- 19 -> 20
- 20 -> 19
- 33 -> 34
- 34 -> 33
- 36 -> 37
- 37 -> 36
- 38 -> 39
- 39 -> 38
+
+| source sign class | reflected sign class |
+|:---:|:---:|
+| 19 | 20 |
+| 20 | 19 |
+| 33 | 34 |
+| 34 | 33 |
+| 36 | 37 |
+| 37 | 36 |
+| 38 | 39 |
+| 39 | 38 |
 
 I wrote a method, rotate (In[17]), to slightly rotate the images to generate additional images, but I ran out of time to incorporate the method in the pipeline.
 
@@ -100,7 +103,7 @@ I wrote a method, normalize (In[19]), to normalize the images to prevent neurons
 
 The number of sign class occurrences with reflections versus sign classes is shown below.
 
-![alt text][ReflectionOccurrencesImage]
+![sign class occurrences with reflections][ReflectionOccurrencesImage]
 
 
 ###2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
@@ -108,33 +111,46 @@ The number of sign class occurrences with reflections versus sign classes is sho
 My model consisted of the following layers:
 
 | Layer | Description	|
-|:------------------------:|:---------------------------------:|
-| *Input*  | 32x32x1 grayscale image  |
-| *Layer 1*:  | Input = 32x32x1. Output = 32x32x32.  |
-| Convolutional 5x5.  | |
+|:---|:---|
+| `Input`  | 32x32x1 grayscale image  |
+| `Layer 1`:  | `Input: 32x32x1, Output: 32x32x32`  |
+| Convolutional 5x5.  | stride 1x1, output: 32x32x32 |
 | RELU.  | |
-| Max pooling 2x2.  | |
-| *Layer 2*:  | Input = 16x16x32. Output = 16x16x64.  |
-| Convolutional 5x5.  | |
+| Max pooling 2x2.  | stride 2x2, output: 16x16x32 |
+| `Layer 2`:  | `Input: 16x16x32, Output: 16x16x64` |
+| Convolutional 5x5.  | stride 1x1, output: 16x16x64 |
 | RELU.  | |
-| Max pooling 2x2.  | |
-| *Layer 3*:  | Input = 8x8x64. Output = 8x8x128.	 |
-| Convolutional 5x5.  |	|
+| Max pooling 2x2.  | stride 2x2, output: 8x8x64 |
+| `Layer 3`:  | `Input: 8x8x64, Output: 8x8x128`	 |
+| Convolutional 5x5.  | stride 1x1, output: 8x8x128 |
 | RELU.  |	|
-| Dropout.  |	|
-| Max pooling 2x2.  |	|
-| Flatten.  | Input = 8x8x128. Output = 2048.  |
-| *Layer 4*:  | Input = 2048. Output = 1024.  |
-| Fully Connected.  |	|
+| Max pooling 2x2.  |	stride 2x2, output: 4x4x128 |
+| Dropout.  | keep probability = 0.5 |
+| `Flatten.`  | `Input: 4x4x128, Output: 2048.` |
+| `Layer 4`:  | `Input: 2048, Output: 1024.` |
+| Fully Connected.  |	output 1024 |
 | RELU.  |	|
-| Dropout.  |	|
-| *Layer 5*:  | Input = 1024. Output = 43  |
-| Fully Connected.  | |
+| Dropout.  | keep probability = 0.5 |
+| `Layer 5`:  | `Input: 1024, Output: 43` |
+| Fully Connected.  | output: 43 |
 
 
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
-To train the model, I used an ....
+I employed a training mechanism similar to that demonstrated in the LeNet lab example.
+I added a check to only save the model data when the train accuracy improved from the previous iterations.
+
+To train the model, I used:
+
+| Parameter | Value |
+|:---:|:---:|
+| learning rate | 0.001 |
+| number of epochs | 100 |
+| batch size | 256 |
+| optimizer | Adam optimizer |
+| minimized | cross entropy |
+
+
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
