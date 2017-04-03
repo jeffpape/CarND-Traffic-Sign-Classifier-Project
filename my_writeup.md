@@ -109,27 +109,27 @@ My model consisted of the following layers:
 
 | Layer | Description	|
 |:------------------------:|:---------------------------------:|
-| *Input* | 32x32x1 grayscale image |
-| *Layer 1*: | Input = 32x32x1. Output = 32x32x32. |
-| Convolutional 5x5. | |
-| RELU. | |
-| Max pooling 2x2. | |
-| *Layer 2*: | Input = 16x16x32. Output = 16x16x64. |
-| Convolutional 5x5. | |
-| RELU. | |
+| *Input*  | 32x32x1 grayscale image  |
+| *Layer 1*:  | Input = 32x32x1. Output = 32x32x32.  |
+| Convolutional 5x5.  | |
+| RELU.  | |
 | Max pooling 2x2.  | |
-| *Layer 3*: | Input = 8x8x64. Output = 8x8x128.	|
-| Convolutional 5x5. |	|
-| RELU. |	|
+| *Layer 2*:  | Input = 16x16x32. Output = 16x16x64.  |
+| Convolutional 5x5.  | |
+| RELU.  | |
+| Max pooling 2x2.  | |
+| *Layer 3*:  | Input = 8x8x64. Output = 8x8x128.	 |
+| Convolutional 5x5.  |	|
+| RELU.  |	|
 | Dropout.  |	|
-| Max pooling 2x2.   |	|
-| Flatten.  | Input = 8x8x128. Output = 2048. |
-| *Layer 4*: | Input = 2048. Output = 1024 |
-| Fully Connected. |	|
-| RELU. |	|
-| Dropout. |	|
-| *Layer 5*: | Input = 1024. Output = 43 |
-| Fully Connected. | |
+| Max pooling 2x2.  |	|
+| Flatten.  | Input = 8x8x128. Output = 2048.  |
+| *Layer 4*:  | Input = 2048. Output = 1024.  |
+| Fully Connected.  |	|
+| RELU.  |	|
+| Dropout.  |	|
+| *Layer 5*:  | Input = 1024. Output = 43  |
+| Fully Connected.  | |
 
 
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
