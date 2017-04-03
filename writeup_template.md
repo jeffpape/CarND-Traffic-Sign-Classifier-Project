@@ -19,9 +19,8 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[VisualizationImage]: ./examples/TrafficSignsOccurrencesInTrainDataSet.png "Visualization"
-[SampleTrafficSign]: ./examples/SampleTrafficSign.png "before Grayscaling"
-[SampleTrafficSignGray]: ./examples/SampleTrafficSignGray.png "after Grayscaling"
+[image1]: ./examples/visualization.jpg "Visualization"
+[image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [image5]: ./examples/placeholder.png "Traffic Sign 2"
@@ -37,44 +36,36 @@ The goals / steps of this project are the following:
 
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-You're reading it! and here is a link to my [project code](https://github.com/jeffpape/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ###Data Set Summary & Exploration
 
 ####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
 
-I used the numpy library to calculate summary statistics of the traffic
+I used the pandas library to calculate summary statistics of the traffic
 signs data set:
 
-* The size of training set is 34799 images.
-* The size of validation set is 4410 images.
-* The size of test set is 12630 images.
-* The shape of a traffic sign image is 32 pixels x 32 pixels by 3 colors.
-* The number of unique classes/labels in the data set is 43 sign types.
+* The size of training set is ?
+* The size of the validation set is ?
+* The size of test set is ?
+* The shape of a traffic sign image is ?
+* The number of unique classes/labels in the data set is ?
 
-####2. Include an exploratory visualization of the dataset and identify where the code is in your code file.
+####2. Include an exploratory visualization of the dataset.
 
-The code for this step is contained in code cells from 3 to 5 (In[3] to In[5]) of the IPython notebook.  
+Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
 
-10 random images for each sign class are shown in the output of code cell 4 (In[4])
-The bar chart shows number of occurrences for each sign type in the training data set.
-
-![alt text][VisualizationImage]
+![alt text][image1]
 
 ###Design and Test a Model Architecture
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-The code for this step is contained in code cells from 6 to 21 (In[6] to In[21]) of the IPython notebook.
+As a first step, I decided to convert the images to grayscale because ...
 
-I converted the images to grayscale because the signs are not distinctive based on their sign color, but they are distinctive by the shapes and images they use. In other words, no 2 sign types only differ by the colors they employ.
+Here is an example of a traffic sign image before and after grayscaling.
 
-I used Contrast Limited Adaptive Histogram Equalization (CLAHE) in the skimage.exposure library to adjusted the images' intensities.
-
-Here is an example of a traffic sign image before and after grayscaling and intensity correction.
-
-![alt text][SampleTrafficSign]
-![alt text][SampleTrafficSignGray]
+![alt text][image2]
 
 As a last step, I normalized the image data because ...
 
@@ -87,6 +78,7 @@ Here is an example of an original image and an augmented image:
 ![alt text][image3]
 
 The difference between the original data set and the augmented data set is the following ...
+
 
 ####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
 
@@ -106,7 +98,7 @@ My final model consisted of the following layers:
 
 
 
-###3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 To train the model, I used an ....
 
@@ -169,6 +161,7 @@ For the first image, the model is relatively sure that this is a stop sign (prob
 | .05					| Yield											|
 | .04	      			| Bumpy Road					 				|
 | .01				    | Slippery Road      							|
+
 
 For the second image ...
 
