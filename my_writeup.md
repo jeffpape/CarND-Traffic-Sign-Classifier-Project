@@ -148,8 +148,8 @@ To train the model, I used:
 | Parameter | Value |
 |:---:|:---:|
 | learning rate | 0.001 |
-| number of epochs | 100 |
-| batch size | 256 |
+| number of epochs | 80 |
+| batch size | 128 |
 | optimizer | Adam optimizer |
 | minimized | cross entropy |
 
@@ -164,22 +164,28 @@ My model accuracies are:
 
 Since this is the first time I have implemented a tensorflow model on my own, I used the LeNet model provided in the course as a starting point.
 
-I arrived at a model with 3 convolution layers because I did not want a drastic change in size of the dimensional size but a gradual change.
+I arrived at a model with 3 Convolutional layers because I did not want a drastic change in size of the dimensional size but a gradual change.
+
+I used Convolutional layers to look for features within the signs. Seeing a sampling of the sign images, I saw that multiples pictures of the same sign are different; for instance due to light intensity (or lack of) or camera orientation.
+
+I used RELU layers because they provide activation and are computational inexpensive to use.
+
+I used max pooling layers sum the image pixels in small areas.
 
 I added the dropout layers so that my model would have computational redundancy. This is accomplished by randomly removing some weights in the layer.
 
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+My model has high accuracy for the training, validation and test data. I have probably overfitted my model to the training data because I see a small drop in the accuracy from the training images to the validation images and the test images; however, I believe the overfitting is small because the accuracy drop off is not very large.
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
+I tuned the learning rate to a small number because of the explanation provided in the lectures and because when the learning rate was larger I saw oscillations in my training accuracy from one epoch to the next.
 
+I tried changing the batch size, but I could not determine a difference. I wondered if a larger batch would require more virtual memory and possibly induce memory page swapping, so I return the batch size to the value used in the lectures.
+
+Honestly, I had a horrible experience using the AWS account for development. First, I could not login into my virtual instances after they were created; neither could, my Udacity mentor, Martin Rohde, nor Joe Gardner, an AWS cloud expert who helped me diagnose problems with my AWS account. Second I loss valuable time waiting for a response from AWS.
+Once I finally received a response from AWS, the person was in the billing department who could not provide any technical help beyond sending me links to community discussions. Third, I was bitten by the cuda driver incompatibility problem, I lost another 1-2 weeks trying to sort that out. I finally gave up and employed my old, but faithful early 2011 MacBookPro. I takes me 8+ hours to compute my IPython notebook. I am contemplating purchasing my own tensorflow computer, but that is a lot money to spend; I am not certain if I will recapture my investment in learning because with all the issues I encountered on this project, I am not certain if I will be able to complete this term within the deadline restrictions.
+
+Honestly, I believed the LeNet model would be relevant to the traffic sign application because the model was main one discussed in the lectures and the learning assignments.
+
+My model accuracies are all above the requested cut off of 0.93.
 
 ###Test a Model on New Images
 
