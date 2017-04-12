@@ -38,7 +38,7 @@ The goals / steps of this project are the following:
 
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
 
-You're reading it! and here is a link to my [project code](https://github.com/jeffpape/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+You are reading my writeup file. My project code is at [project code](https://github.com/jeffpape/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
 
 ###Data Set Summary & Exploration
 
@@ -55,7 +55,7 @@ signs data set:
 
 ####2. Include an exploratory visualization of the dataset.
 
-The code for this step is contained in code cells from 3 to 5 (In[3] to In[5]) of the IPython notebook.  
+The code for the exploratory visualization is contained in code cells from 3 to 5 (In[3] to In[5]) of the IPython notebook.  
 
 10 random images for each sign class are shown in the output of code cell 4 (In[4])
 The bar chart shows number of occurrences for each sign type in the training data set.
@@ -67,9 +67,9 @@ The number of sign class occurrences versus sign classes is shown below.
 
 ####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
 
-The code for this step is contained in code cells from 6 to 21 (In[6] to In[21]) of the IPython notebook.
+The code for preprocessing the images is contained in code cells from 6 to 21 (In[6] to In[21]) of the IPython notebook.
 
-I converted the images to grayscale because the signs are not distinctive based on their color, but they are distinctive by their shapes and images. In other words, no 2 sign classes only differ by their colors.
+I converted the images to grayscale because the signs are not distinctive based on their color, but they are distinctive by their shapes and images. In other words, no 2 sign classes only differ by their colors, but their shapes.
 
 I used the Contrast Limited Adaptive Histogram Equalization (CLAHE) in the skimage.exposure library to adjusted the images' intensities.
 
@@ -80,9 +80,12 @@ Here is an example of a traffic sign image before and after grayscaling and inte
 
 I noticed several sign classes were under represented. I wrote a method, reflect (In[13]), to horizontally, vertically and both reflected some of the sign classes to generate additional images of the same sign class.
 The sign classes that are the same when reflected are:
-. horizontally: 11, 12, 13, 15, 17, 18, 22, 26, 30, 35
-. vertically: 1, 5, 12, 15, 17
-. both: 32, 40
+
+|reflected | sign classes |
+|:---:|:---|
+| horizontally | 11, 12, 13, 15, 17, 18, 22, 26, 30, 35 |
+| vertically | 1, 5, 12, 15, 17
+| both | 32, 40 |
 
 Some sign classes become new sign classes when horizontally reflected are:
 
@@ -97,7 +100,7 @@ Some sign classes become new sign classes when horizontally reflected are:
 | 38 | 39 |
 | 39 | 38 |
 
-I wrote a method, rotate (In[17]), to slightly rotate the images to generate additional images, but I ran out of time to incorporate the method in the pipeline.
+I wrote a method, rotate (In[17]), to slightly rotate the images to generate additional images, but I ran out of time to incorporate the method in the pipeline. Slightly rotating the images +/-10 and +/- 5 degrees would add new images to train with and generate more images for the underrepresented sign classes.
 
 I wrote a method, normalize (In[19]), to normalize the images to prevent neurons from saturating when inputs have varying scale, and to aid generalization.
 
@@ -154,10 +157,16 @@ To train the model, I used:
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ?
-* test set accuracy of ?
+My model accuracies are:
+* training set accuracy = ?
+* validation set accuracy = ?
+* test set accuracy = ?
+
+Since this is the first time I have implemented a tensorflow model on my own, I used the LeNet model provided in the course as a starting point.
+
+I arrived at a model with 3 convolution layers because I did not want a drastic change in size of the dimensional size but a gradual change.
+
+I added the dropout layers so that my model would have computational redundancy. This is accomplished by randomly removing some weights in the layer.
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
