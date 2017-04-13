@@ -23,12 +23,17 @@ The goals / steps of this project are the following:
 [SampleTrafficSign]: ./examples/SampleTrafficSign.png "signs before grayscale and intensity correction"
 [SampleTrafficSignGray]: ./examples/SampleTrafficSignGray.png "signs after grayscale and intensity correction"
 [ReflectionOccurrencesImage]: ./examples/TrafficSignsOccurrenceWithReflections.png "sign classes occurrences with reflections"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[MyImage0]: ./my-traffic-signs-data/image_0.png "My Traffic Sign 0"
+[MyImage1]: ./my-traffic-signs-data/image_1.png "My Traffic Sign 1"
+[MyImage2]: ./my-traffic-signs-data/image_2.png "My Traffic Sign 2"
+[MyImage3]: ./my-traffic-signs-data/image_3.png "My Traffic Sign 3"
+[MyImage4]: ./my-traffic-signs-data/image_4.png "My Traffic Sign 4"
+[MyImage5]: ./my-traffic-signs-data/image_5.png "My Traffic Sign 5"
+[MyImage6]: ./my-traffic-signs-data/image_6.png "My Traffic Sign 6"
+[MyImage7]: ./my-traffic-signs-data/image_7.png "My Traffic Sign 7"
+[MyImage8]: ./my-traffic-signs-data/image_8.png "My Traffic Sign 8"
+[MySignPredictionsImage]: ./examples/MySignPredictions.png "My Sign Predictions"
+
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -158,13 +163,15 @@ To train the model, I used:
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My model accuracies are:
-* training set accuracy = ?
-* validation set accuracy = ?
-* test set accuracy = ?
+* training set accuracy is 1.0000.
+* validation set accuracy is 0.9889.
+* test set accuracy is 0.9758.
+
+My training set accuracy seems a little too perfect. I suspect I probably have logic or computational error, but I do not know where the error is. Since my validation set and test set accuracies are rather close, I presume the probable error is small.
 
 Since this is the first time I have implemented a tensorflow model on my own, I used the LeNet model provided in the course as a starting point.
 
-I arrived at a model with 3 Convolutional layers because I did not want a drastic change in size of the dimensional size but a gradual change.
+I arrived at a model with 3 Convolutional layers because I did not want a drastic change in size of the dimensional size between layers but a gradual change.
 
 I used Convolutional layers to look for features within the signs. Seeing a sampling of the sign images, I saw that multiples pictures of the same sign are different; for instance due to light intensity (or lack of) or camera orientation.
 
@@ -172,7 +179,7 @@ I used RELU layers because they provide activation and are computational inexpen
 
 I used max pooling layers sum the image pixels in small areas.
 
-I added the dropout layers so that my model would have computational redundancy. This is accomplished by randomly removing some weights in the layer.
+I added the dropout layers so that my model would have computational redundancy. This is accomplished by randomly removing some units in the layer, so that the layer will build alternate computation.
 
 My model has high accuracy for the training, validation and test data. I have probably overfitted my model to the training data because I see a small drop in the accuracy from the training images to the validation images and the test images; however, I believe the overfitting is small because the accuracy drop off is not very large.
 
@@ -185,49 +192,69 @@ Once I finally received a response from AWS, the person was in the billing depar
 
 Honestly, I believed the LeNet model would be relevant to the traffic sign application because the model was main one discussed in the lectures and the learning assignments.
 
-My model accuracies are all above the requested cut off of 0.93.
+All my model accuracies are above the requested cut off of 0.93.
 
 ###Test a Model on New Images
 
 ####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
 
-Here are five German traffic signs that I found on the web:
+Here are nine German traffic signs that I found on the web and the potential difficulties in classifying them - other classifying difficulties may also exist:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6]
-![alt text][image7] ![alt text][image8]
+![alt text][MyImage0] 3 thin white inner arrows could blur into a ring.
 
-The first image might be difficult to classify because ...
+![alt text][MyImage1] Thin black lines could blur into symbol for "Road narrows on right".
+
+![alt text][MyImage2] Left arrow could be rotated too much.
+
+![alt text][MyImage3] Inner line could be rotated too much suggesting "End of all speed and passing limits".
+
+![alt text][MyImage4] Thin black lines could blur into symbol for "Double curve".
+
+![alt text][MyImage5] Left arrow could be rotated too much.
+
+![alt text][MyImage6] Inner black children symbol could blur.
+
+![alt text][MyImage7] Speed limit amount could blur into a different number; especially since the data set does not have a good distribution of all speed limit amounts.
+
+![alt text][MyImage8] Yield could be rotated too much but empty interior makes matching another sign unlikely.
+
 
 ####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					|
-|:---------------------:|:---------------------------------------------:|
-| Stop Sign      		| Stop sign   									|
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Number | Image	| Prediction | Accuracy |
+|:---:|:---:|:---:|:---:|
+| 0 | Roundabout mandatory | Roundabout mandatory | 1.000 |
+| 1 | Double curve | Double curve | 0.997 |
+| 2 | Keep left | Keep left | 1.000 |
+| 3 | No entry | No entry | 1.000 |
+| 4 | Road narrows on right | Road narrows on right | 1.000 |
+| 5 | Turn left ahead | Turn left ahead | 1.000 |
+| 6 | Children crossing | Children crossing | 1.000 |
+| 7 | Speed limit (20 km/h)| Speed limit (20 km/h) | 1.000 |
+| 8 | Yield | Yield | 1.000 |
 
+I did notice in earlier test runs that my model had difficulty in identifying the correct numerals in the speed limit sign; often the model thought 20 was 50. I suspect this is partially do to that my training data set have many 50 km/h speed limit signs and few 20 km/h ones.
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+My model was able to correctly classify 9 of the 9 traffic signs, which generates an accuracy of 1.00 = 100%. This compares favorably to the accuracy on the test set of which was 0.9758.
+
+My model accuracies are:
+* training set accuracy is 1.0000.
+* validation set accuracy is 0.9889.
+* test set accuracy is 0.9758.
+
 
 ####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
+The code for making predictions on my model is located in cells from 38 to 44 (In[38] to In[44]) of the IPython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+For all of my test images, my model is very certain of its predictions (very close to ~1.00); fortunately, all the models predictions are correct.
 
-| Probability         	|     Prediction	        					|
-|:---------------------:|:---------------------------------------------:|
-| .60         			| Stop sign   									|
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+![my sign predictions][MySignPredictionsImage]
 
-For the second image ...
 
 ### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
 ####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+
+Unfortunately, I ran out of time to complete the optional portion of the project. I humbly request help in figuring this portion out so I can learn from the images because I am a visual learner.
